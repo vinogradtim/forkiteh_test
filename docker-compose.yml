@@ -1,0 +1,25 @@
+services:
+  backend:
+    build:
+      context: .
+    container_name: fastapi_app
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: postgres:15
+    container_name: postgresql
+    restart: always
+    env_file:
+      - .docker-compose.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
